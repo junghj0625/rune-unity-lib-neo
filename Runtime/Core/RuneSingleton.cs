@@ -9,6 +9,8 @@ namespace Rune.Core
     /// <typeparam name="T">싱글톤으로 사용할 구체 타입</typeparam>
     public abstract class RuneSingleton<T> : RuneBehaviour where T : RuneSingleton<T>
     {
+        [SerializeField] private bool _dontDestroyOnLoad;
+
         private static T _instance;
 
         /// <summary>
@@ -25,6 +27,11 @@ namespace Rune.Core
             }
 
             _instance = (T)this;
+
+            if (_dontDestroyOnLoad)
+            {
+                DontDestroyOnLoad(gameObject);
+            }
         }
 
         protected override void OnDestroy()
