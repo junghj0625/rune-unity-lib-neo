@@ -10,8 +10,8 @@ namespace Rune.Command
     public abstract class GameCommand
     {
         /// <summary>
-        /// 커맨드를 실행합니다.
+        /// 커맨드를 실행합니다. 비동기 동작이 필요하면 yield로 대기합니다.
         /// </summary>
-        public abstract void Execute();
+        public abstract System.Collections.IEnumerator Execute();
     }
 }

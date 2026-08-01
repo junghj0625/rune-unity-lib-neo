@@ -14,11 +14,17 @@ namespace Rune.Data
         private Dictionary<string, int> _ints = new();
 
         /// <summary>
+        /// 플래그가 변경되었을 때 발생합니다. 변경된 키를 전달합니다.
+        /// </summary>
+        public event Action<string> OnChanged;
+
+        /// <summary>
         /// 문자열 플래그를 설정합니다.
         /// </summary>
         public void Set(string key, string value)
         {
             _strings[key] = value;
+            OnChanged?.Invoke(key);
         }
 
         /// <summary>
@@ -35,6 +41,7 @@ namespace Rune.Data
         public void SetInt(string key, int value)
         {
             _ints[key] = value;
+            OnChanged?.Invoke(key);
         }
 
         /// <summary>

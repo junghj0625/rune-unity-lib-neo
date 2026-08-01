@@ -22,7 +22,22 @@ namespace Rune.Core
     public abstract class RuneBehaviour : MonoBehaviour
     {
         protected virtual void Awake() { }
+        protected virtual void Start()
+        {
+            StartCoroutine(LateStartCoroutine());
+        }
         protected virtual void OnDestroy() { }
+
+        /// <summary>
+        /// 모든 Start()가 실행된 다음 프레임에 호출됩니다.
+        /// </summary>
+        protected virtual void LateStart() { }
+
+        private System.Collections.IEnumerator LateStartCoroutine()
+        {
+            yield return null;
+            LateStart();
+        }
 
         /// <summary>
         /// 자신의 GameObject에서 컴포넌트를 캐싱하여 반환합니다.
