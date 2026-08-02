@@ -17,8 +17,11 @@ namespace Rune.UI
         protected override void Awake()
         {
             base.Awake();
-            
-            if (_hideOnAwake) { Hide(); }
+
+            if (_hideOnAwake)
+            {
+                Hide();
+            }
         }
 
         /// <summary>
@@ -26,8 +29,7 @@ namespace Rune.UI
         /// </summary>
         public virtual void Show()
         {
-            Canvas.alpha = 1f;
-            Canvas.blocksRaycasts = true;
+            gameObject.SetActive(true);
         }
 
         /// <summary>
@@ -35,13 +37,12 @@ namespace Rune.UI
         /// </summary>
         public virtual void Hide()
         {
-            Canvas.alpha = 0f;
-            Canvas.blocksRaycasts = false;
+            gameObject.SetActive(false);
         }
 
         /// <summary>
-        /// UI가 현재 보이는 상태인지 여부.
+        /// UI가 현재 활성 상태인지 여부.
         /// </summary>
-        public bool IsVisible => Canvas.alpha > 0f;
+        public bool IsVisible => gameObject.activeSelf;
     }
 }
