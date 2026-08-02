@@ -59,6 +59,16 @@ namespace Rune.Core
         }
 
         /// <summary>
+        /// 지정된 Transform의 컴포넌트를 캐싱하여 반환합니다.
+        /// </summary>
+        protected T GetAt<T>(ref T field, Transform target) where T : class
+        {
+            if (target == null) return field;
+
+            return field ??= target.GetComponent<T>();
+        }
+
+        /// <summary>
         /// 상대 경로로 자식을 찾아 컴포넌트를 캐싱하여 반환합니다.
         /// 경로는 Transform.Find 형식 (예: "Body/HitBox").
         /// </summary>
@@ -86,6 +96,22 @@ namespace Rune.Core
             if (child != null)
             {
                 field = child.gameObject;
+            }
+
+            return field;
+        }
+
+        /// <summary>
+        /// 상대 경로로 자식 Transform을 캐싱하여 반환합니다.
+        /// </summary>
+        protected Transform GetTransform(ref Transform field, string path)
+        {
+            if (field != null) return field;
+
+            var child = transform.Find(path);
+            if (child != null)
+            {
+                field = child.transform;
             }
 
             return field;

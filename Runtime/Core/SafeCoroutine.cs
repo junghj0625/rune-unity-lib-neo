@@ -9,7 +9,7 @@ namespace Rune.Core
     /// </summary>
     public struct SafeCoroutine
     {
-        private Coroutine _handle;
+        private UnityEngine.Coroutine _handle;
 
         /// <summary>
         /// 이전 코루틴을 취소하고 새 코루틴을 시작합니다.
