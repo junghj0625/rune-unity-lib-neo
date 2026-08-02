@@ -21,17 +21,28 @@ namespace Rune.Core
     /// </remarks>
     public abstract class RuneBehaviour : MonoBehaviour
     {
-        protected virtual void Awake() { }
+        protected virtual void Awake()
+        {
+            
+        }
+
         protected virtual void Start()
         {
             StartCoroutine(LateStartCoroutine());
         }
-        protected virtual void OnDestroy() { }
+        
+        protected virtual void OnDestroy()
+        {
+            
+        }
 
         /// <summary>
         /// 모든 Start()가 실행된 다음 프레임에 호출됩니다.
         /// </summary>
-        protected virtual void LateStart() { }
+        protected virtual void LateStart()
+        {
+            
+        }
 
         private System.Collections.IEnumerator LateStartCoroutine()
         {
@@ -59,6 +70,22 @@ namespace Rune.Core
             if (child != null)
             {
                 field = child.GetComponent<T>();
+            }
+
+            return field;
+        }
+
+        /// <summary>
+        /// 상대 경로로 자식 GameObject를 캐싱하여 반환합니다.
+        /// </summary>
+        protected GameObject GetObject(ref GameObject field, string path)
+        {
+            if (field != null) return field;
+
+            var child = transform.Find(path);
+            if (child != null)
+            {
+                field = child.gameObject;
             }
 
             return field;
