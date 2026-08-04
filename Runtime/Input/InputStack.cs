@@ -1,19 +1,18 @@
 using System.Collections.Generic;
 using Rune.Core;
-using UnityEngine;
 
 namespace Rune.Input
 {
     /// <summary>
     /// 입력 소비자를 스택으로 관리하는 싱글톤.
-    /// 맨 위의 소비자만 입력을 받습니다.
+    /// 이벤트 기반으로 활성 소비자에게 입력을 전달합니다.
     /// </summary>
     public class InputStack : RuneSingleton<InputStack>
     {
         private readonly Stack<IInputConsumer> _stack = new();
 
         /// <summary>
-        /// 소비자를 스택에 Push합니다. 이후 이 소비자만 입력을 받습니다.
+        /// 소비자를 스택에 Push합니다.
         /// </summary>
         public static void Push(IInputConsumer consumer)
         {
@@ -22,7 +21,6 @@ namespace Rune.Input
 
         /// <summary>
         /// 소비자를 스택에서 제거합니다.
-        /// 맨 위가 아니어도 안전하게 제거합니다.
         /// </summary>
         public static void Remove(IInputConsumer consumer)
         {
@@ -34,7 +32,6 @@ namespace Rune.Input
                 return;
             }
 
-            // 맨 위가 아닌 경우: 재구성
             var temp = new Stack<IInputConsumer>();
             while (Instance._stack.Count > 0)
             {
@@ -61,13 +58,62 @@ namespace Rune.Input
         /// </summary>
         public static bool HasConsumer => Instance._stack.Count > 0;
 
-        private void Update()
+        #region Send Methods
+
+        public static void SendUp()
         {
-            foreach (var consumer in _stack)
+            foreach (var consumer in Instance._stack)
             {
-                consumer.ProcessInput();
+                consumer.OnUp();
                 if (consumer.BlocksBelow) break;
             }
         }
+
+        public static void SendDown()
+        {
+            foreach (var consumer in Instance._stack)
+            {
+                consumer.OnDown();
+                if (consumer.BlocksBelow) break;
+            }
+        }
+
+        public static void SendLeft()
+        {
+            foreach (var consumer in Instance._stack)
+            {
+                consumer.OnLeft();
+                if (consumer.BlocksBelow) break;
+            }
+        }
+
+        public static void SendRight()
+        {
+            foreach (var consumer in Instance._stack)
+            {
+                consumer.OnRight();
+                if (consumer.BlocksBelow) break;
+            }
+        }
+
+        public static void SendConfirm()
+        {
+            foreach (var consumer in Instance._stack)
+            {
+                consumer.OnConfirm();
+                if (consumer.BlocksBelow) break;
+            }
+        }
+
+        public static void SendCancel()
+        {
+            foreach (var consumer in Instance._stack)
+            {
+                consumer.OnCancel();
+                if (consumer.BlocksBelow) break;
+            }
+        }
+
+        #endregion
     }
 }
