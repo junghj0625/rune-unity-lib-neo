@@ -9,6 +9,9 @@ namespace Rune.Command
     [System.Serializable]
     public abstract class GameCommand
     {
+        [SerializeField] private bool _enabled = true;
+        public bool Enabled => _enabled;
+
         /// <summary>
         /// 커맨드를 실행합니다. 비동기 동작이 필요하면 yield로 대기합니다.
         /// </summary>
