@@ -1,3 +1,5 @@
+using System;
+
 namespace Rune.UI
 {
     /// <summary>
@@ -19,5 +21,8 @@ namespace Rune.UI
         /// 현재 포커스 상태인지 여부.
         /// </summary>
         bool IsFocused { get; }
+
+        Action OnFocus { get; set; }
+        Action OnUnfocus { get; set; }
     }
 }

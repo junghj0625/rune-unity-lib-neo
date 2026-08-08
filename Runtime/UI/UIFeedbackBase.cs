@@ -1,8 +1,6 @@
 using System;
-using System.Collections;
 using Rune.Core;
 using Rune.Data;
-using UnityEngine;
 using UnityEngine.EventSystems;
 
 namespace Rune.UI
@@ -13,9 +11,6 @@ namespace Rune.UI
     /// </summary>
     public abstract class UIFeedbackBase : RuneBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
     {
-        [SerializeField] private bool _focusOnHover = false;
-
-
         private readonly Reactive<bool> _isHovered = new(false);
         public bool IsHovered { get => _isHovered.Value; set => _isHovered.Value = value; }
 
@@ -26,7 +21,9 @@ namespace Rune.UI
         public Action OnUnfocus { get; set; }
         public Action OnEnter { get; set; }
         public Action OnExit { get; set; }
-        public Action OnConfirmed { get; set; }
+        public Action OnConfirm { get; set; }
+        public Action OnStartHover { get; set; }
+        public Action OnEndHover { get; set; }
 
         #region Unity Messages
 
@@ -52,7 +49,17 @@ namespace Rune.UI
 
         public virtual void Confirm()
         {
-            OnConfirmed?.Invoke();
+            OnConfirm?.Invoke();
+        }
+
+        public virtual void StartHover()
+        {
+            OnStartHover?.Invoke();
+        }
+
+        public virtual void EndHover()
+        {
+            OnEndHover?.Invoke();
         }
 
         #endregion
@@ -80,16 +87,13 @@ namespace Rune.UI
 
         private void OnChangedIsHovered(bool value)
         {
-            if (_focusOnHover)
+            if (value)
             {
-                if (value)
-                {
-                    Focus();
-                }
-                else
-                {
-                    Unfocus();
-                }
+                StartHover();
+            }
+            else
+            {
+                EndHover();
             }
         }
 
