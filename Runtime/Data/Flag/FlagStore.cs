@@ -5,7 +5,6 @@ namespace Rune.Data
 {
     /// <summary>
     /// string, int 키-값 쌍을 저장하는 범용 플래그 컨테이너.
-    /// 글로벌 상태, 스테이지 상태 등에 활용합니다.
     /// </summary>
     [System.Serializable]
     public class FlagStore

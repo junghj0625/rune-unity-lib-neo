@@ -18,9 +18,6 @@ namespace Rune.Command
         NotEqual = 3000,
     }
 
-    /// <summary>
-    /// 커맨드 페이지 실행 조건을 정의합니다.
-    /// </summary>
     [Serializable]
     public class FlagCondition
     {
@@ -35,9 +32,6 @@ namespace Rune.Command
         public StringCheck StringCheckType => _stringCheck;
         public int IntValue => _intValue;
 
-        /// <summary>
-        /// 주어진 FlagStore에 대해 이 조건을 평가합니다.
-        /// </summary>
         public bool Evaluate(FlagStore store)
         {
             if (store == null) return false;
