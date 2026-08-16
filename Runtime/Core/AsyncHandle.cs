@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 namespace Rune.Core
@@ -39,5 +40,18 @@ namespace Rune.Core
         /// 완료될 때까지 yield로 대기합니다.
         /// </summary>
         public CustomYieldInstruction Wait() => new WaitUntil(() => IsDone);
+
+        public static AsyncHandle Run(MonoBehaviour owner, IEnumerator routine)
+        {
+            var handle = new AsyncHandle();
+            owner.StartCoroutine(Wrap(routine, handle));
+            return handle;
+        }
+
+        private static IEnumerator Wrap(IEnumerator routine, AsyncHandle handle)
+        {
+            yield return routine;
+            handle.Complete();
+        }
     }
 }
