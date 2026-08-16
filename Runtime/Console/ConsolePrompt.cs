@@ -23,6 +23,11 @@ namespace Rune.UI
         /// </summary>
         public bool IsAnswered { get; private set; }
 
+        /// <summary>
+        /// 답변을 공백으로 분할한 결과. 응답 전에는 null.
+        /// </summary>
+        public string[] Args { get; private set; }
+
         public override bool keepWaiting => !IsAnswered;
 
         public ConsolePrompt(string question)
@@ -36,6 +41,7 @@ namespace Rune.UI
         public void Respond(string answer)
         {
             Answer = answer;
+            Args = answer.Trim().Split(' ');
             IsAnswered = true;
         }
     }

@@ -11,7 +11,9 @@ namespace Rune.UI
     public class ConsoleBackend
     {
         private readonly Dictionary<string, Action<string[]>> _commands = new();
+
         private string _log = "";
+        
         private ConsolePrompt _pendingPrompt;
 
         /// <summary>

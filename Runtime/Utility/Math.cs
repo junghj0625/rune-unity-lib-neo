@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace Rune.Util
 {
     /// <summary>
@@ -19,6 +21,31 @@ namespace Rune.Util
         public static float SmootherStep(float t)
         {
             return t * t * t * (t * (6f * t - 15f) + 10f);
+        }
+
+        /// <summary>
+        /// 인덱스가 리스트의 유효 범위 내인지 확인합니다.
+        /// </summary>
+        public static bool IsValidIndex<T>(IReadOnlyList<T> list, int index)
+        {
+            return index >= 0 && index < list.Count;
+        }
+
+        /// <summary>
+        /// 인덱스가 리스트의 유효 범위 내인지 확인하고, 범위 내라면 반환합니다.
+        /// </summary>
+        public static bool IsValidIndex<T>(IReadOnlyList<T> list, int index, out T value)
+        {
+            if (IsValidIndex(list, index))
+            {
+                value = list[index];
+                return true;
+            }
+            else
+            {
+                value = default;
+                return false;
+            }
         }
     }
 }
